@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-import '../utills/constants/color_constants.dart';
+part of '../radio_form_field.dart';
 
 class RadioRowWidget extends StatelessWidget {
   final String groupValue, text, value;
