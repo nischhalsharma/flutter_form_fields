@@ -11,29 +11,34 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This package provides devlopers a variety of Custom Widgets that can be used with Form. 
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+It contains RadioFormField Widgetthat can be used in the Form. It has validation function which can help developer to display error Text if input is not satisfied by the function. By Default Flutter sdk doesn't povide validation Feature on Radio Widget.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add flutter_form_fields under dependencies in pubspec.yalm file.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+ValueNotifier<String> radioValue = ValueNotifier<String>('');
+RadioFormField(
+            radioValue: radioValue,
+            validator: (val) {
+              if (radioValue.value == '') {
+                return "Please Select at least one option";
+              }
+              return null;
+            },
+          ),
+          const Text(
+            "Hint Text Here?",
+          ),
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+See example section to see more about using this package.
