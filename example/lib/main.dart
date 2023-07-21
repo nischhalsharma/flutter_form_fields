@@ -16,6 +16,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light().copyWith(useMaterial3: true),
       home: Scaffold(
           appBar: AppBar(
             title: const Text(
