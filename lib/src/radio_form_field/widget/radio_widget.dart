@@ -56,5 +56,3 @@ class RadioWidget extends StatelessWidget {
         ),
       );
 }
-
-

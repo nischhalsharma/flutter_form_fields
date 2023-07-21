@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'utills/constants/color_constants.dart';
+import '../utills/constants/color_constants.dart';
 
-
-part './widgets/radio_widget.dart';
-part './widgets/radio_row_widget.dart';
-
+part 'widget/radio_row_widget.dart';
+part 'widget/radio_widget.dart';
 
 class RadioFormField extends FormField<String> {
   RadioFormField({
