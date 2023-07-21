@@ -23,7 +23,7 @@ Add flutter_form_fields under dependencies in pubspec.yaml file.
  
 ## example
 
-![](example_gif.gif)
+![](example-gif.gif)
 
 ## Usage
 
