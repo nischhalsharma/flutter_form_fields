@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_fields/flutter_form_fields.dart';
 
@@ -22,6 +24,7 @@ class MainApp extends StatelessWidget {
           ),
           body: FormWidget(
               formKey: formKey,
+              profileImage: ValueNotifier(null),
               likedThisApp: likedThisApp,
               rating: rating,
               willRecommend: willRecommend)),
@@ -36,12 +39,14 @@ class FormWidget extends StatelessWidget {
     required this.likedThisApp,
     required this.rating,
     required this.willRecommend,
+    required this.profileImage,
   });
 
   final GlobalKey<FormState> formKey;
   final ValueNotifier<String> likedThisApp;
   final ValueNotifier<String> rating;
   final ValueNotifier<String> willRecommend;
+  final ValueNotifier<File?> profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +55,17 @@ class FormWidget extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          /// if both errorText and validator is null then default error text will be displayed.
+          ProfileImageFormField(
+            imageFile: profileImage,
+          ),
           const Text(
             "I hope you understand how to use this package by this example app. Can you please confirm?",
           ),
           RadioFormField(
             radioValue: likedThisApp,
+
+            /// If validator is not null the widget will display ths String returned by the validator instead of errorText or default Error Text.
             validator: (val) {
               if (likedThisApp.value == '') {
                 return "Please Select at least one option";
@@ -94,6 +105,8 @@ class FormWidget extends StatelessWidget {
           ),
           RadioFormField(
             radioValue: willRecommend,
+
+            /// If validator is null and errorText is not null then the Widget will display the error text given in errorText parameter.
             errorText: "we want to know. Please!!",
             titles: const ["Yes", "No", "Not at all"],
             values: const ["yes", "no", "not at all"],
