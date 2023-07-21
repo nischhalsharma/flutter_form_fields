@@ -13,7 +13,7 @@ class CheckBoxFormField extends FormField<List<String>> {
       required CheckBoxFormFieldController controller,
       String errorText = 'Please Select atleast one',
       String? Function(List<String>?)? validator,
-      super.autovalidateMode = AutovalidateMode.onUserInteraction,
+      super.autovalidateMode = AutovalidateMode.disabled,
       super.enabled,
       super.onSaved})
       : super(validator: (val) {

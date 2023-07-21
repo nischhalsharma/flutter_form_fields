@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utills/constants/color_constants.dart';
-
+part 'helper_class/radio_form_field_controller.dart';
 part 'widget/radio_row_widget.dart';
 part 'widget/radio_widget.dart';
 
@@ -12,17 +12,15 @@ class RadioFormField extends FormField<String> {
     super.key,
     super.onSaved,
     super.enabled = true,
-    super.autovalidateMode = AutovalidateMode.onUserInteraction,
+    super.autovalidateMode = AutovalidateMode.disabled,
 
     /// Validator function determines if the input in the field is valid or not. return null if valid else return a string that can be display to  the user.
     String? Function(String? val)? validator,
-    required ValueNotifier<String> radioValue,
+    required RadioFormFieldController controller,
 
     /// The [values] parameter assigns the value to the radioValue.value according t0 the user input
-    List<String> values = const ["yes", "no"],
 
-    /// The [title] parameter are the List of Strings that are visible on the UI.
-    List<String> titles = const ["Yes", "No"],
+    Map<String, String> values = const {"Yes": "yes", "No": "no"},
 
     /// The callback function will we called when the imput changes
     Function? callback,
@@ -37,15 +35,14 @@ class RadioFormField extends FormField<String> {
           return null;
         }, builder: (FormFieldState<String> fieldState) {
           void onChangehandler() {
-            fieldState.didChange(radioValue.value);
+            fieldState.didChange(controller.value);
             if (callback != null) callback();
           }
 
           return RadioWidget(
             fieldState: fieldState,
-            radioValue,
+            controller,
             callback: onChangehandler,
-            titles: titles,
             values: values,
           );
         });

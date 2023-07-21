@@ -1,45 +1,42 @@
 part of '../radio_form_field.dart';
 
 class RadioWidget extends StatelessWidget {
-  final ValueNotifier<String> radioValue;
-  final List<String> values, titles;
+  final RadioFormFieldController controller;
+  final Map<String, String> values;
   final Function? callback;
   final FormFieldState<String>? fieldState;
 
   const RadioWidget(
-    this.radioValue, {
+    this.controller, {
     super.key,
     this.callback,
-    this.values = const ["yes", "no"],
-    this.titles = const ["Yes", "No"],
+    this.values = const {"Yes": "yes", "No": "no"},
     this.fieldState,
   });
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder(
-        valueListenable: radioValue,
-        builder: (context, value, child) => Column(
+        valueListenable: controller,
+        builder: (context, selectedValue, child) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Wrap(
               children: values
-                  .asMap()
+                  .keys
                   .map(
-                    (index, value) => MapEntry(
-                      index,
+                    (key) =>
                       RadioRowWidget(
-                        groupValue: radioValue.value,
-                        text: titles[index],
-                        value: value,
+                        groupValue: selectedValue,
+                        text: key,
+                        value: values[key]!,
                         onChanged: (val) {
-                          radioValue.value = val!;
+                          controller.value = val!;
                           if (callback != null) callback!();
                         },
                         isError: fieldState?.hasError ?? false,
-                      ),
-                    ),
+                      
+                    )
                   )
-                  .values
                   .toList(),
             ),
             if (fieldState != null && fieldState!.hasError)
