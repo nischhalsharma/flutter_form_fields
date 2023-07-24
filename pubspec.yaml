@@ -1,6 +1,6 @@
 name: flutter_form_fields
 description: Custom widgets to help developers create input fields with validations that are not available in flutter sdk.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/nischhalsharma/flutter_form_fields.git
 
 environment:

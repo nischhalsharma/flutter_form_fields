@@ -28,23 +28,43 @@ Add flutter_form_fields under dependencies in pubspec.yaml file.
 ## Usage
 
 ```dart
-ValueNotifier<String> radioValue = ValueNotifier('');
-ValueNotifier<File?> imageFile = ValueNotifier(null);
-RadioFormField(
-            radioValue: radioValue,
-            validator: (val) {
-              if (radioValue.value == '') {
-                return "Please Select at least one option";
-              }
-              return null;
-            },
-          ),
+final RadioFormFieldController radioController = RadioFormFieldController();
+final ProfileImageFormFieldController profileImageController = ProfileImageFormFieldController();
+final CheckBoxFormFieldController checkboxController = CheckBoxFormFieldController();
 
 ProfileImageFormField(
-            imageFile: profileImage,
+            controller: profileImageController,
             validator:(imageFile){
                /// Validation Condition
             }
+          ),
+
+RadioFormField(
+            titleText: "How much will you rate us for this package?",
+            controller: radioController,
+            values: const {
+              "5 Star": 5,
+              "4 Star": 4,
+              "3 Star": 3,
+              "2 Star": 2,
+              "1 Star": 1,
+            },
+            validator: (val) {
+                /// Validation Condition
+            },
+          ),
+
+CheckBoxFormField(
+            titleText: "Select the widgets you liked the most?",
+            values: const {
+              "ProfileImageFormField Widget": ProfileImageFormField,
+              "RadioFormField Widget": RadioFormField,
+              "CheckBoxFormField Widget": CheckBoxFormField
+            },
+            controller: mostLikedWidgetsController,
+            validator: (values) {
+                /// Validation Condition
+            },
           ),
 ```
 
