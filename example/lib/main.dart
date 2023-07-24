@@ -31,11 +31,11 @@ class FormWidget extends StatefulWidget {
 
 class _FormWidgetState extends State<FormWidget> {
   late final GlobalKey<FormState> formKey;
-  late final RadioFormFieldController understoodController;
-  late final RadioFormFieldController ratingController;
-  late final RadioFormFieldController willRecommendController;
+  late final RadioFormFieldController<bool> understoodController;
+  late final RadioFormFieldController<int> ratingController;
+  late final RadioFormFieldController<bool> willRecommendController;
   late final ProfileImageFormFieldController profileImageController;
-  late final CheckBoxFormFieldController mostLikedWidgetsController;
+  late final CheckBoxFormFieldController<Type> mostLikedWidgetsController;
 
   @override
   void initState() {
@@ -71,10 +71,14 @@ class _FormWidgetState extends State<FormWidget> {
           ),
 
           /// If validator is not null the widget will display ths String returned by the validator instead of errorText or default Error Text.
-          RadioFormField(
+          RadioFormField<bool>(
             titleText:
                 "I hope you understand how to use this package by this example app. Can you please confirm?",
             controller: understoodController,
+            items: [
+              RadioFormFieldItem(hintText: 'Yes', value: true),
+              RadioFormFieldItem(hintText: 'No', value: false)
+            ],
             direction: Axis.vertical,
             validator: (val) {
               if (understoodController.value == null) {
@@ -83,46 +87,51 @@ class _FormWidgetState extends State<FormWidget> {
               return null;
             },
           ),
-          RadioFormField(
-            titleText: "How much will you rate us for this package?",
-            controller: ratingController,
-            validator: (val) {
-              if (ratingController.value == null) {
-                return "Please Rate us";
-              }
-              return null;
-            },
-            values: const {
-              "5 Star": 5,
-              "4 Star": 4,
-              "3 Star": 3,
-              "2 Star": 2,
-              "1 Star": 1,
-            },
-          ),
+          RadioFormField<int>(
+              titleText: "How much will you rate us for this package?",
+              controller: ratingController,
+              validator: (val) {
+                if (ratingController.value == null) {
+                  return "Please Rate us";
+                }
+                return null;
+              },
+              items: [
+                RadioFormFieldItem(hintText: '5 Start', value: 5),
+                RadioFormFieldItem(hintText: '4 Start', value: 4),
+                RadioFormFieldItem(hintText: '3 Start', value: 3),
+                RadioFormFieldItem(hintText: '2 Start', value: 3),
+                RadioFormFieldItem(hintText: '1 Start', value: 1),
+              ]),
 
           /// If validator is null and errorText is not null then the Widget will display the error text given in errorText parameter.
-          RadioFormField(
+          RadioFormField<bool>(
             titleText:
                 "Will you recommend this package to your developer friends?",
             controller: willRecommendController,
             errorText: "we want to know. Please!!",
-            values: const {
-              "Yes": "yes",
-              "No": "no",
-              "Not at all": "Not at all"
-            },
+            items: [
+              RadioFormFieldItem(hintText: 'Yes', value: true),
+              RadioFormFieldItem(hintText: 'No', value: false)
+            ],
           ),
-          CheckBoxFormField(
+          CheckBoxFormField<Type>(
             titleText: "Select the two widgets you liked the most?",
-            values: const {
-              "ProfileImageFormField Widget": ProfileImageFormField,
-              "RadioFormField Widget": RadioFormField,
-              "CheckBoxFormField Widget": CheckBoxFormField
-            },
+            items: [
+              CheckBoxFormFieldItem(
+                  hintText: 'ProfileImageFormField Widget',
+                  value: ProfileImageFormField),
+              CheckBoxFormFieldItem(
+                  hintText: 'RadioFormField Widget', value: RadioFormField),
+              CheckBoxFormFieldItem(
+                  hintText: 'CheckBoxFormField Widget',
+                  value: CheckBoxFormField),
+            ],
             controller: mostLikedWidgetsController,
             validator: (values) {
-              return values?.length == 2 ? null : "Please select two values";
+              return values?.isNotEmpty ?? false
+                  ? null
+                  : "Please select a widget";
             },
           ),
 
