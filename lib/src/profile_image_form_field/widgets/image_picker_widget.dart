@@ -1,13 +1,13 @@
 
 part of '../profile_image_form_field.dart';
 class ImagePickerWidget extends StatefulWidget {
-  final ValueNotifier<File?> imageFile;
+  final ProfileImageFormFieldController controller;
   final Color borderColor;
   final FormFieldState<File>? fieldState;
   final void Function()? onChanged;
   const ImagePickerWidget({
     super.key,
-    required this.imageFile,
+    required this.controller,
     required this.borderColor,
     required this.fieldState,
     this.onChanged,
@@ -22,7 +22,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      widget.imageFile.value = File(pickedFile.path);
+      widget.controller.value = File(pickedFile.path);
       if (widget.onChanged != null) widget.onChanged!();
     }
   }
@@ -53,12 +53,12 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                           radius: 55,
                           backgroundColor: Colors.white,
                           child: ValueListenableBuilder(
-                            valueListenable: widget.imageFile,
+                            valueListenable: widget.controller,
                             builder: (context, value, child) => value != null
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(68),
                                     child: Image.file(
-                                      widget.imageFile.value!,
+                                      widget.controller.value!,
                                       fit: BoxFit.cover,
                                       width: 105,
                                       height: 105,
@@ -81,7 +81,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                       radius: 20,
                       borderRadius: BorderRadius.circular(20),
                       onTap: () {
-                        widget.imageFile.value = null;
+                        widget.controller.value = null;
                         if (widget.onChanged != null) widget.onChanged!();
                       },
                       child: CircleAvatar(

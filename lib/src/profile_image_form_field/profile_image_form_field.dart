@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../utills/constants/color_constants.dart';
 
 part 'widgets/image_picker_widget.dart';
+part 'helper_class/profile_image_form_field_controller.dart';
 
 /// [ProfileImageFormField] widget can be used in a form to pick image as a profile image from the user's gallery.
 class ProfileImageFormField extends FormField<File> {
@@ -13,7 +14,7 @@ class ProfileImageFormField extends FormField<File> {
     super.key,
     super.onSaved,
     super.enabled = true,
-    super.autovalidateMode = AutovalidateMode.onUserInteraction,
+    super.autovalidateMode = AutovalidateMode.disabled,
 
     /// Gives color to the border of the widget. Default set to [Colors.blue]
     Color borderColor = Colors.blue,
@@ -26,7 +27,7 @@ class ProfileImageFormField extends FormField<File> {
 
     /// Validator function determines if the input in the field is valid or not. return null if valid else return a string that can be display to  the user.
     String? Function(File? val)? validator,
-    required ValueNotifier<File?> imageFile,
+    required ProfileImageFormFieldController controller,
   }) : super(validator: (val) {
           if (validator != null) return validator(val);
           if (val == null) {
@@ -35,12 +36,12 @@ class ProfileImageFormField extends FormField<File> {
           return null;
         }, builder: (FormFieldState<File> fieldState) {
           void onChangehandler() {
-            fieldState.didChange(imageFile.value);
+            fieldState.didChange(controller.value);
             if (callback != null) callback();
           }
 
           return ImagePickerWidget(
-            imageFile: imageFile,
+            controller: controller,
             borderColor: borderColor,
             fieldState: fieldState,
             onChanged: onChangehandler,
