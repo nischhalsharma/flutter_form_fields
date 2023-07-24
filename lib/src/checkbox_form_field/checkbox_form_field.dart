@@ -6,16 +6,16 @@ part 'widgets/checkbox_widget.dart';
 part 'helper_classes/checkbox_form_field_controller.dart';
 part 'widgets/checkbox_row_widget.dart';
 
-class CheckBoxFormField extends FormField<List<String>> {
+class CheckBoxFormField extends FormField<List<dynamic>> {
   CheckBoxFormField(
       {super.key,
-      required Map<String, String> values,
+      required Map<String, dynamic> values,
       required CheckBoxFormFieldController controller,
       required String titleText,
       Axis direction = Axis.horizontal,
       TextStyle? titleTextStyle,
       String errorText = 'Please Select atleast one',
-      String? Function(List<String>?)? validator,
+      String? Function(List<dynamic>?)? validator,
       super.autovalidateMode = AutovalidateMode.disabled,
       super.enabled,
       super.onSaved})

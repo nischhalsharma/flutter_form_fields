@@ -7,10 +7,10 @@ class CheckBoxWidget extends StatelessWidget {
       required this.controller,
       required this.onChanged,
       required this.fieldState, required this.direction});
-  final Map<String, String> values;
+  final Map<String, dynamic> values;
   final CheckBoxFormFieldController controller;
   final Function onChanged;
-  final FormFieldState<List<String>> fieldState;
+  final FormFieldState<List<dynamic>> fieldState;
   final Axis direction;
   @override
   Widget build(BuildContext context) {
