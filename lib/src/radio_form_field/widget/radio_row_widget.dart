@@ -1,9 +1,9 @@
 part of '../radio_form_field.dart';
 
-class RadioRowWidget extends StatelessWidget {
-  final dynamic groupValue, value;
+class RadioRowWidget<T> extends StatelessWidget {
+  final T groupValue, value;
   final String text;
-  final void Function(dynamic val) onChanged;
+  final void Function(T? val) onChanged;
   final bool isError;
 
   const RadioRowWidget(
@@ -22,13 +22,13 @@ class RadioRowWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Radio<String>(
+            Radio<T>(
               fillColor: isError
                   ? MaterialStateColor.resolveWith(
                       (states) => ColorConstants.errorTextColor)
                   : null,
-              value: value.toString(),
-              groupValue: groupValue.toString(),
+              value: value,
+              groupValue: groupValue,
               onChanged: onChanged,
             ),
             Text(

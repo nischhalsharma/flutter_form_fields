@@ -1,8 +1,8 @@
 part of '../radio_form_field.dart';
 
-class RadioWidget extends StatelessWidget {
-  final RadioFormFieldController controller;
-  final Map<String, dynamic> values;
+class RadioWidget<T> extends StatelessWidget {
+  final RadioFormFieldController<T> controller;
+  final List<RadioFormFieldItem<T>> items;
   final Function? callback;
   final FormFieldState<dynamic>? fieldState;
   final Axis direction;
@@ -11,7 +11,7 @@ class RadioWidget extends StatelessWidget {
     required this.controller,
     super.key,
     this.callback,
-    this.values = const {"Yes": "yes", "No": "no"},
+    required this.items,
     this.fieldState,
     required this.direction,
   });
@@ -24,13 +24,13 @@ class RadioWidget extends StatelessWidget {
           children: [
             Wrap(
               direction: direction,
-              children: values.keys
-                  .map((key) => RadioRowWidget(
+              children: items
+                  .map((e) => RadioRowWidget(
                         groupValue: selectedValue,
-                        text: key,
-                        value: values[key]!,
+                        text: e.hintText,
+                        value: e.value,
                         onChanged: (val) {
-                          controller.value =controller._internalMap[ val!];
+                          controller.value = val;
                           if (callback != null) callback!();
                         },
                         isError: fieldState?.hasError ?? false,

@@ -1,17 +1,17 @@
 part of '../checkbox_form_field.dart';
 
-class CheckBoxWidget extends StatelessWidget {
+class CheckBoxWidget<T> extends StatelessWidget {
   const CheckBoxWidget(
       {super.key,
-      required this.values,
+      required this.items,
       required this.controller,
       required this.onChanged,
       required this.fieldState,
       required this.direction});
-  final Map<String, dynamic> values;
-  final CheckBoxFormFieldController controller;
+  final List<CheckBoxFormFieldItem<T>> items;
+  final CheckBoxFormFieldController<T> controller;
   final Function onChanged;
-  final FormFieldState<List<dynamic>> fieldState;
+  final FormFieldState<List<T>> fieldState;
   final Axis direction;
   @override
   Widget build(BuildContext context) {
@@ -23,17 +23,17 @@ class CheckBoxWidget extends StatelessWidget {
             children: [
               Wrap(
                   direction: direction,
-                  children: values.keys
-                      .map((key) => CheckboxRowWidget(
-                          isSelected: selectedValues.contains(values[key]),
+                  children: items
+                      .map((e) => CheckboxRowWidget(
+                          isSelected: selectedValues.contains(e.value),
                           hasError: fieldState.hasError,
                           onChanged: (isSelected) {
                             isSelected!
-                                ? selectedValues.add(values[key]!)
-                                : selectedValues.remove(values[key]!);
+                                ? selectedValues.add(e.value)
+                                : selectedValues.remove(e.value);
                             onChanged();
                           },
-                          text: key))
+                          text: e.hintText))
                       .toList()),
               if (fieldState.hasError)
                 Padding(

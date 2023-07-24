@@ -5,17 +5,18 @@ import '../utills/constants/color_constants.dart';
 part 'widgets/checkbox_widget.dart';
 part 'helper_classes/checkbox_form_field_controller.dart';
 part 'widgets/checkbox_row_widget.dart';
+part 'helper_classes/checkbox_form_field_item.dart';
 
-class CheckBoxFormField extends FormField<List<dynamic>> {
+class CheckBoxFormField<T> extends FormField<List<T>> {
   CheckBoxFormField(
       {super.key,
-      required Map<String, dynamic> values,
-      required CheckBoxFormFieldController controller,
+      required List<CheckBoxFormFieldItem<T>> items,
+      required CheckBoxFormFieldController<T> controller,
       required String titleText,
       Axis direction = Axis.horizontal,
       TextStyle? titleTextStyle,
       String errorText = 'Please Select atleast one',
-      String? Function(List<dynamic>?)? validator,
+      String? Function(List<T>?)? validator,
       super.autovalidateMode = AutovalidateMode.disabled,
       super.enabled,
       super.onSaved})
@@ -40,7 +41,7 @@ class CheckBoxFormField extends FormField<List<dynamic>> {
               ),
               CheckBoxWidget(
                 direction: direction,
-                values: values,
+                items: items,
                 controller: controller,
                 onChanged: onChangeHandler,
                 fieldState: fieldState,
