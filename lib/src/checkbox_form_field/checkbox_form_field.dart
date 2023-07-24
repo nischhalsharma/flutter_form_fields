@@ -11,6 +11,9 @@ class CheckBoxFormField extends FormField<List<String>> {
       {super.key,
       required Map<String, String> values,
       required CheckBoxFormFieldController controller,
+      required String titleText,
+      Axis direction = Axis.horizontal,
+      TextStyle? titleTextStyle,
       String errorText = 'Please Select atleast one',
       String? Function(List<String>?)? validator,
       super.autovalidateMode = AutovalidateMode.disabled,
@@ -27,11 +30,22 @@ class CheckBoxFormField extends FormField<List<String>> {
             fieldState.didChange(controller.values);
           }
 
-          return CheckBoxWidget(
-            values: values,
-            controller: controller,
-            onChanged: onChangeHandler,
-            fieldState: fieldState,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                titleText,
+                style: titleTextStyle,
+              ),
+              CheckBoxWidget(
+                direction: direction,
+                values: values,
+                controller: controller,
+                onChanged: onChangeHandler,
+                fieldState: fieldState,
+              ),
+            ],
           );
         });
 }

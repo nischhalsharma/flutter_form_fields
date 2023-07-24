@@ -6,11 +6,12 @@ class CheckBoxWidget extends StatelessWidget {
       required this.values,
       required this.controller,
       required this.onChanged,
-      required this.fieldState});
+      required this.fieldState, required this.direction});
   final Map<String, String> values;
   final CheckBoxFormFieldController controller;
   final Function onChanged;
   final FormFieldState<List<String>> fieldState;
+  final Axis direction;
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -20,6 +21,7 @@ class CheckBoxWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Wrap(
+                direction: direction,
                   children: values.keys
                       .map((key) => CheckboxRowWidget(
                           isSelected: selectedValues.contains(values[key]),
