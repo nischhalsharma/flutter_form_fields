@@ -23,7 +23,7 @@ class RadioFormField extends FormField<String> {
 
     /// The [values] parameter assigns the value to the radioValue.value according t0 the user input
 
-    Map<String, String> values = const {"Yes": "yes", "No": "no"},
+    Map<String, dynamic> values = const {"Yes": "yes", "No": "no"},
 
     /// The callback function will we called when the imput changes
     Function? callback,

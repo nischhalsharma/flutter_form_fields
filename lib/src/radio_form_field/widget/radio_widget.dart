@@ -2,7 +2,7 @@ part of '../radio_form_field.dart';
 
 class RadioWidget extends StatelessWidget {
   final RadioFormFieldController controller;
-  final Map<String, String> values;
+  final Map<String, dynamic> values;
   final Function? callback;
   final FormFieldState<String>? fieldState;
   final Axis direction;
