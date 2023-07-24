@@ -13,6 +13,8 @@ class RadioFormField extends FormField<String> {
     super.onSaved,
     super.enabled = true,
     super.autovalidateMode = AutovalidateMode.disabled,
+    required final String titleText,
+    TextStyle? titleTextStyle,
 
     /// Validator function determines if the input in the field is valid or not. return null if valid else return a string that can be display to  the user.
     String? Function(String? val)? validator,
@@ -39,11 +41,21 @@ class RadioFormField extends FormField<String> {
             if (callback != null) callback();
           }
 
-          return RadioWidget(
-            fieldState: fieldState,
-            controller,
-            callback: onChangehandler,
-            values: values,
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                titleText,
+                style: titleTextStyle,
+              ),
+              RadioWidget(
+                fieldState: fieldState,
+                controller,
+                callback: onChangehandler,
+                values: values,
+              ),
+            ],
           );
         });
 }
