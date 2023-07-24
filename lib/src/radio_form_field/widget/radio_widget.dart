@@ -4,7 +4,7 @@ class RadioWidget extends StatelessWidget {
   final RadioFormFieldController controller;
   final Map<String, dynamic> values;
   final Function? callback;
-  final FormFieldState<String>? fieldState;
+  final FormFieldState<dynamic>? fieldState;
   final Axis direction;
 
   const RadioWidget(

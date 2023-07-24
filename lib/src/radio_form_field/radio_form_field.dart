@@ -7,7 +7,7 @@ part 'widget/radio_widget.dart';
 
 /// [RadioFormField] is a widget that can let user to select on option from a group of [Radio] widgets.
 /// Along with that a validator function can be provided in order to validate the input.
-class RadioFormField extends FormField<String> {
+class RadioFormField extends FormField<dynamic> {
   RadioFormField({
     super.key,
     super.onSaved,
@@ -36,7 +36,7 @@ class RadioFormField extends FormField<String> {
             return errorText;
           }
           return null;
-        }, builder: (FormFieldState<String> fieldState) {
+        }, builder: (FormFieldState<dynamic> fieldState) {
           void onChangehandler() {
             fieldState.didChange(controller.value);
             if (callback != null) callback();

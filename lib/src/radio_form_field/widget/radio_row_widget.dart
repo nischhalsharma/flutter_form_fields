@@ -1,7 +1,8 @@
 part of '../radio_form_field.dart';
 
 class RadioRowWidget extends StatelessWidget {
-  final String groupValue, text, value;
+  final dynamic groupValue, value;
+  final String text;
   final void Function(String? val) onChanged;
   final bool isError;
 
@@ -26,7 +27,7 @@ class RadioRowWidget extends StatelessWidget {
                   ? MaterialStateColor.resolveWith(
                       (states) => ColorConstants.errorTextColor)
                   : null,
-              value: value,
+              value: value.toString(),
               groupValue: groupValue,
               onChanged: onChanged,
             ),
