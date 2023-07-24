@@ -3,7 +3,7 @@ part of '../radio_form_field.dart';
 class RadioRowWidget extends StatelessWidget {
   final dynamic groupValue, value;
   final String text;
-  final void Function(String? val) onChanged;
+  final void Function(dynamic val) onChanged;
   final bool isError;
 
   const RadioRowWidget(
