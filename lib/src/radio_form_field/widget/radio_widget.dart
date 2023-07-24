@@ -5,6 +5,7 @@ class RadioWidget extends StatelessWidget {
   final Map<String, String> values;
   final Function? callback;
   final FormFieldState<String>? fieldState;
+  final Axis direction;
 
   const RadioWidget(
     this.controller, {
@@ -12,6 +13,7 @@ class RadioWidget extends StatelessWidget {
     this.callback,
     this.values = const {"Yes": "yes", "No": "no"},
     this.fieldState,
+    required this.direction,
   });
 
   @override
@@ -21,11 +23,9 @@ class RadioWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Wrap(
-              children: values
-                  .keys
-                  .map(
-                    (key) =>
-                      RadioRowWidget(
+              direction: direction,
+              children: values.keys
+                  .map((key) => RadioRowWidget(
                         groupValue: selectedValue,
                         text: key,
                         value: values[key]!,
@@ -34,9 +34,7 @@ class RadioWidget extends StatelessWidget {
                           if (callback != null) callback!();
                         },
                         isError: fieldState?.hasError ?? false,
-                      
-                    )
-                  )
+                      ))
                   .toList(),
             ),
             if (fieldState != null && fieldState!.hasError)
