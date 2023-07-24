@@ -7,8 +7,8 @@ class RadioWidget extends StatelessWidget {
   final FormFieldState<dynamic>? fieldState;
   final Axis direction;
 
-  const RadioWidget(
-    this.controller, {
+  const RadioWidget({
+    required this.controller,
     super.key,
     this.callback,
     this.values = const {"Yes": "yes", "No": "no"},
@@ -30,7 +30,7 @@ class RadioWidget extends StatelessWidget {
                         text: key,
                         value: values[key]!,
                         onChanged: (val) {
-                          controller.value = val!;
+                          controller.value =controller._internalMap[ val!];
                           if (callback != null) callback!();
                         },
                         isError: fieldState?.hasError ?? false,

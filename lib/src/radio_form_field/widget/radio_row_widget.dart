@@ -28,7 +28,7 @@ class RadioRowWidget extends StatelessWidget {
                       (states) => ColorConstants.errorTextColor)
                   : null,
               value: value.toString(),
-              groupValue: groupValue,
+              groupValue: groupValue.toString(),
               onChanged: onChanged,
             ),
             Text(

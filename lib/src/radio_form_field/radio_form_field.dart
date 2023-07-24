@@ -18,7 +18,7 @@ class RadioFormField extends FormField<dynamic> {
     TextStyle? titleTextStyle,
 
     /// Validator function determines if the input in the field is valid or not. return null if valid else return a string that can be display to  the user.
-    String? Function(String? val)? validator,
+    String? Function(dynamic val)? validator,
     required RadioFormFieldController controller,
 
     /// The [values] parameter assigns the value to the radioValue.value according t0 the user input
@@ -42,6 +42,8 @@ class RadioFormField extends FormField<dynamic> {
             if (callback != null) callback();
           }
 
+          controller._internalKeyValue(values);
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -53,7 +55,7 @@ class RadioFormField extends FormField<dynamic> {
               RadioWidget(
                 direction: direction,
                 fieldState: fieldState,
-                controller,
+                controller: controller,
                 callback: onChangehandler,
                 values: values,
               ),
