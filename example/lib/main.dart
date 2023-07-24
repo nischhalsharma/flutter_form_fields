@@ -1,54 +1,62 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_fields/flutter_form_fields.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  MainApp({super.key});
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final ValueNotifier<String> likedThisApp = ValueNotifier('');
-  final ValueNotifier<String> rating = ValueNotifier('');
-  final ValueNotifier<String> willRecommend = ValueNotifier('');
+  const MainApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light().copyWith(useMaterial3: true),
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              "Feedback Form",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light().copyWith(useMaterial3: true),
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                "Feedback Form",
+              ),
             ),
-          ),
-          body: FormWidget(
-              formKey: formKey,
-              profileImage: ValueNotifier(null),
-              likedThisApp: likedThisApp,
-              rating: rating,
-              willRecommend: willRecommend)),
-    );
+            body: const FormWidget()));
   }
 }
 
-class FormWidget extends StatelessWidget {
-  const FormWidget({
-    super.key,
-    required this.formKey,
-    required this.likedThisApp,
-    required this.rating,
-    required this.willRecommend,
-    required this.profileImage,
-  });
+class FormWidget extends StatefulWidget {
+  const FormWidget({super.key});
 
-  final GlobalKey<FormState> formKey;
-  final ValueNotifier<String> likedThisApp;
-  final ValueNotifier<String> rating;
-  final ValueNotifier<String> willRecommend;
-  final ValueNotifier<File?> profileImage;
+  @override
+  State<FormWidget> createState() => _FormWidgetState();
+}
+
+class _FormWidgetState extends State<FormWidget> {
+  late final GlobalKey<FormState> formKey;
+  late final RadioFormFieldController understoodController;
+  late final RadioFormFieldController ratingController;
+  late final RadioFormFieldController willRecommendController;
+  late final ProfileImageFormFieldController profileImageController;
+  late final CheckBoxFormFieldController mostLikedWidgetsController;
+
+  @override
+  void initState() {
+    formKey = GlobalKey<FormState>();
+    understoodController = RadioFormFieldController();
+    ratingController = RadioFormFieldController();
+    willRecommendController = RadioFormFieldController();
+    profileImageController = ProfileImageFormFieldController();
+    mostLikedWidgetsController = CheckBoxFormFieldController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    formKey.currentState?.dispose();
+    understoodController.dispose();
+    ratingController.dispose();
+    willRecommendController.dispose();
+    profileImageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,60 +67,65 @@ class FormWidget extends StatelessWidget {
         children: [
           /// if both errorText and validator is null then default error text will be displayed.
           ProfileImageFormField(
-            imageFile: profileImage,
+            controller: profileImageController,
           ),
-          const Text(
-            "I hope you understand how to use this package by this example app. Can you please confirm?",
-          ),
-          RadioFormField(
-            radioValue: likedThisApp,
 
-            /// If validator is not null the widget will display ths String returned by the validator instead of errorText or default Error Text.
+          /// If validator is not null the widget will display ths String returned by the validator instead of errorText or default Error Text.
+          RadioFormField(
+            titleText:
+                "I hope you understand how to use this package by this example app. Can you please confirm?",
+            controller: understoodController,
+            direction: Axis.vertical,
             validator: (val) {
-              if (likedThisApp.value == '') {
+              if (understoodController.value == null) {
                 return "Please Select at least one option";
               }
               return null;
             },
           ),
-          const Text(
-            "How much will you rate us for this package?",
-          ),
           RadioFormField(
-            radioValue: rating,
+            titleText: "How much will you rate us for this package?",
+            controller: ratingController,
             validator: (val) {
-              if (rating.value == '') {
+              if (ratingController.value == null) {
                 return "Please Rate us";
               }
               return null;
             },
-            titles: const [
-              "5 Star",
-              "4 Star",
-              "3 Star",
-              "2 Star",
-              "1 Star",
-            ],
-            values: const [
-              "5",
-              "4",
-              "3",
-              "2",
-              "1",
-            ],
-            autovalidateMode: AutovalidateMode.disabled,
+            values: const {
+              "5 Star": 5,
+              "4 Star": 4,
+              "3 Star": 3,
+              "2 Star": 2,
+              "1 Star": 1,
+            },
           ),
-          const Text(
-            "Will you recommend this package to your developer friends?",
-          ),
-          RadioFormField(
-            radioValue: willRecommend,
 
-            /// If validator is null and errorText is not null then the Widget will display the error text given in errorText parameter.
+          /// If validator is null and errorText is not null then the Widget will display the error text given in errorText parameter.
+          RadioFormField(
+            titleText:
+                "Will you recommend this package to your developer friends?",
+            controller: willRecommendController,
             errorText: "we want to know. Please!!",
-            titles: const ["Yes", "No", "Not at all"],
-            values: const ["yes", "no", "not at all"],
+            values: const {
+              "Yes": "yes",
+              "No": "no",
+              "Not at all": "Not at all"
+            },
           ),
+          CheckBoxFormField(
+            titleText: "Select the two widgets you liked the most?",
+            values: const {
+              "ProfileImageFormField Widget": ProfileImageFormField,
+              "RadioFormField Widget": RadioFormField,
+              "CheckBoxFormField Widget": CheckBoxFormField
+            },
+            controller: mostLikedWidgetsController,
+            validator: (values) {
+              return values?.length == 2 ? null : "Please select two values";
+            },
+          ),
+
           ElevatedButton(
             onPressed: () {
               if (formKey.currentState!.validate()) {
