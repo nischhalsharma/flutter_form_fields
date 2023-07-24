@@ -42,7 +42,9 @@ class ProfileImageFormField extends FormField<File> {
 
           return ImagePickerWidget(
             controller: controller,
-            borderColor: borderColor,
+            borderColor: fieldState.hasError
+                ? ColorConstants.errorTextColor
+                : borderColor,
             fieldState: fieldState,
             onChanged: onChangehandler,
           );

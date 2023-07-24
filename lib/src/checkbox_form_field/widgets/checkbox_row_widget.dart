@@ -5,10 +5,11 @@ class CheckboxRowWidget extends StatelessWidget {
       {super.key,
       required this.onChanged,
       required this.text,
-      required this.isSelected});
+      required this.isSelected,
+      required this.hasError});
   final void Function(bool?) onChanged;
   final String text;
-  final bool isSelected;
+  final bool isSelected, hasError;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +17,7 @@ class CheckboxRowWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Checkbox(
+          isError: hasError,
           value: isSelected,
           onChanged: (value) {
             onChanged(value);
