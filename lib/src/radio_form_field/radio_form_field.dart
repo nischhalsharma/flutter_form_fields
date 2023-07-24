@@ -14,6 +14,7 @@ class RadioFormField extends FormField<String> {
     super.enabled = true,
     super.autovalidateMode = AutovalidateMode.disabled,
     required final String titleText,
+    Axis direction = Axis.horizontal,
     TextStyle? titleTextStyle,
 
     /// Validator function determines if the input in the field is valid or not. return null if valid else return a string that can be display to  the user.
@@ -50,6 +51,7 @@ class RadioFormField extends FormField<String> {
                 style: titleTextStyle,
               ),
               RadioWidget(
+                direction: direction,
                 fieldState: fieldState,
                 controller,
                 callback: onChangehandler,
