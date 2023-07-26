@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-This package provides devlopers a variety of Custom Widgets that can be used with Form. 
+This package provides developers a variety of Custom Widgets that can be used with Form. 
 
 ## Features
 
@@ -28,9 +28,9 @@ Add flutter_form_fields under dependencies in pubspec.yaml file.
 ## Usage
 
 ```dart
-final RadioFormFieldController radioController = RadioFormFieldController();
 final ProfileImageFormFieldController profileImageController = ProfileImageFormFieldController();
-final CheckBoxFormFieldController checkboxController = CheckBoxFormFieldController();
+final RadioFormFieldController ratingController<int> = RadioFormFieldController();
+final CheckBoxFormFieldController mostLikedWidgetsController<Type> = CheckBoxFormFieldController();
 
 ProfileImageFormField(
             controller: profileImageController,
@@ -39,31 +39,40 @@ ProfileImageFormField(
             }
           ),
 
-RadioFormField(
-            titleText: "How much will you rate us for this package?",
-            controller: radioController,
-            values: const {
-              "5 Star": 5,
-              "4 Star": 4,
-              "3 Star": 3,
-              "2 Star": 2,
-              "1 Star": 1,
-            },
-            validator: (val) {
-                /// Validation Condition
-            },
-          ),
+RadioFormField<int>(
+              titleText: "How much will you rate us for this package?",
+              controller: ratingController,
+              validator: (val) {
+                if (ratingController.value == null) {
+                  return "Please Rate us";
+                }
+                return null;
+              },
+              items: [
+                RadioFormFieldItem(hintText: '5 Start', value: 5),
+                RadioFormFieldItem(hintText: '4 Start', value: 4),
+                RadioFormFieldItem(hintText: '3 Start', value: 3),
+                RadioFormFieldItem(hintText: '2 Start', value: 3),
+                RadioFormFieldItem(hintText: '1 Start', value: 1),
+              ]),
 
-CheckBoxFormField(
-            titleText: "Select the widgets you liked the most?",
-            values: const {
-              "ProfileImageFormField Widget": ProfileImageFormField,
-              "RadioFormField Widget": RadioFormField,
-              "CheckBoxFormField Widget": CheckBoxFormField
-            },
+CheckBoxFormField<Type>(
+            titleText: "Select the two widgets you liked the most?",
+            items: [
+              CheckBoxFormFieldItem(
+                  hintText: 'ProfileImageFormField Widget',
+                  value: ProfileImageFormField),
+              CheckBoxFormFieldItem(
+                  hintText: 'RadioFormField Widget', value: RadioFormField),
+              CheckBoxFormFieldItem(
+                  hintText: 'CheckBoxFormField Widget',
+                  value: CheckBoxFormField),
+            ],
             controller: mostLikedWidgetsController,
             validator: (values) {
-                /// Validation Condition
+              return values?.isNotEmpty ?? false
+                  ? null
+                  : "Please select a widget";
             },
           ),
 ```
